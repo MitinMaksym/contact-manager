@@ -1,0 +1,12 @@
+.contactInfo {
+  display: flex;
+
+  &__avatar {
+    width: 150px;
+    flex-grow: 0;
+  }
+}
+
+.list-group {
+  flex-grow: 1;
+}
