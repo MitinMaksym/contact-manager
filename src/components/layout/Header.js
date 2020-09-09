@@ -24,6 +24,12 @@ const Header = (prop) => {
                 Add
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to="/contact/ignored" className="nav-link">
+                <i className="fa fa-trash mr-1" />
+                Ignored
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

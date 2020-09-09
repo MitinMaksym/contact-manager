@@ -6,6 +6,7 @@ import Header from './components/layout/Header'
 import { Switch, Route } from 'react-router-dom'
 import AddContact from './components/Contacts/AddContact'
 import UpdateContact from './components/Contacts/UpdateContact'
+import IgnoredContacts from './components/Contacts/IgnoredContacts'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Header branding="Contact Manager" />
       <Switch>
         <Route path="/" exact component={Contacts} />
+        <Route path="/contact/ignored" exact component={IgnoredContacts} />
         <Route path="/contact/add" exact component={AddContact} />
         <Route path="/contact/update/:id" exact component={UpdateContact} />
       </Switch>

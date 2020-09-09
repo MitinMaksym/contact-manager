@@ -14,7 +14,8 @@ function Contact(props) {
     contact: { id, name, email, role, picture },
     onDeleteHandler,
     isLoading,
-    idForDelete
+    idForDelete,
+    addToIgnore
   } = props
 
   return (
@@ -54,6 +55,17 @@ function Contact(props) {
             }}
           />
         </Link>
+      { props.isIgnoreBtn && <Link to={`/contact/ignored`}>
+          <i onClick = {() => {addToIgnore(props.contact)}}
+            className="fa fa-address-book"
+            style={{
+              cursor: 'pointer',
+              color: 'black',
+              float: 'right',
+              marginRight: '1rem'
+            }}
+          />
+        </Link>}
       </h4>
       {showContactInfo ? (
         <div className="contactInfo ">

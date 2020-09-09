@@ -1,6 +1,12 @@
 import axios from 'axios'
 axios.defaults.baseURL = 'http://localhost:9000/'
 
+export const instanceForIgnore = axios.create({
+  
+  baseURL: 'https://jsonplaceholder.typicode.com/',
+  
+});
+
 export const contactsApi = {
   getContacts: () => {
     return axios
@@ -68,5 +74,15 @@ export const contactsApi = {
       .catch((err) => {
         throw new Error(err)
       })
+  },
+  sendToIgnore:(contacts)=>{
+    return instanceForIgnore.post('users',contacts).then((data) => {
+      if (data.status === 201) {
+        return {
+          status:'success',
+          data:data.data
+        }
+      }
+    })
   }
 }

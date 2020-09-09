@@ -11,7 +11,9 @@ import {
   GET_CONTACT,
   RETRIEVED_CONTACT_FOR_UPADATE,
   CONTACT_UPDATED,
-  UPDATE_CONTACT
+  UPDATE_CONTACT,
+  SEND_IGNORED,
+  CLEAN_IGNORED
 } from './types'
 
 export function* sagaWatcher() {
@@ -20,7 +22,8 @@ export function* sagaWatcher() {
     takeEvery(REMOVE_CONTACT, deleteContact),
     takeEvery(ADD_CONTACT, addContact),
     takeEvery(GET_CONTACT, getContact),
-    takeEvery(UPDATE_CONTACT, updateContact)
+    takeEvery(UPDATE_CONTACT, updateContact),
+    takeEvery(SEND_IGNORED, sendIgnoredContacts),
   ])
 }
 
@@ -81,11 +84,29 @@ function* getContact(action) {
 
 function* updateContact({ payload: { id, newContact } }) {
   try {
+    yield put({ type: SET_LOADING, payload: true })
+
     const result = yield call(contactsApi.updateContact, id, newContact)
     if (result.status === 'success') {
       yield put({ type: CONTACT_UPDATED, payload: result.data })
+      yield put({ type: SET_LOADING, payload: false })
+    }
+  } catch (err) {
+    yield put({ type: SET_LOADING, payload: false })
+
+    console.log(err)
+  }
+}
+
+function* sendIgnoredContacts({ payload: contacts }) {
+  try {
+    const result = yield call(contactsApi.sendToIgnore, contacts)
+    if (result.status === 'success') {
+      yield put({type: CLEAN_IGNORED})
+      console.log('Ignored users were sent')
     }
   } catch (err) {
     console.log(err)
   }
 }
+

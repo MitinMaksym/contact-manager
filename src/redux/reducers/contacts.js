@@ -4,12 +4,15 @@ import {
   CONTACT_ADDED,
   CONTACT_DELETED,
   RETRIEVED_CONTACT_FOR_UPADATE,
-  CONTACT_UPDATED
+  CONTACT_UPDATED,
+  ADD_TO_IGNORE,
+  CLEAN_IGNORED
 } from '../types'
 
 const initialState = {
   contacts: [],
   contactForUpdate: null,
+  ignoredContacts:[],
   isLoading: false
 }
 
@@ -38,7 +41,16 @@ const contactsReducer = (state = initialState, action) => {
         ...state,
         contacts: [action.payload, ...state.contacts]
       }
-
+    case ADD_TO_IGNORE:
+        return {
+          ...state,
+          ignoredContacts: [action.payload, ...state.ignoredContacts]
+        }
+    case CLEAN_IGNORED:
+        return {
+          ...state,
+          ignoredContacts: []
+        }
     case RETRIEVED_CONTACT_FOR_UPADATE:
       return {
         ...state,
